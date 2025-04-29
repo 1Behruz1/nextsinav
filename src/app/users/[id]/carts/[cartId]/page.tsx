@@ -1,6 +1,3 @@
-'use client';
-
-import { useEffect, useState } from "react";
 
 interface CartProduct {
   productId: number;
@@ -21,20 +18,10 @@ interface PageProps {
   };
 }
 
-const CartDetailPage = ({ params }: PageProps) => {
-  const [cart, setCart] = useState<Cart | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch(`https://fakestoreapi.com/carts/${params.cartId}`);
-      const cartData: Cart = await res.json();
-      setCart(cartData);
-    };
-
-    fetchData();
-  }, [params.cartId]);
-
-  if (!cart) return <div>Loading...</div>;
+const CartDetailPage = async ({ params }: PageProps) => {
+  const res = await fetch(`https://fakestoreapi.com/carts/${params.cartId}`);
+  if (!res.ok) throw new Error("Failed to fetch cart");
+  const cart: Cart = await res.json();
 
   return (
     <div className="p-4">

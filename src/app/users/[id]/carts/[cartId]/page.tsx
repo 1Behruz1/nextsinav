@@ -1,3 +1,5 @@
+'use client'; 
+
 import { useEffect, useState } from "react";
 
 interface CartProduct {
@@ -5,7 +7,7 @@ interface CartProduct {
   quantity: number;
 }
 
-const CartDetailPage = async ({ params }: { params: { cartId: string } }) => {
+const CartDetailPage = ({ params }: { params: { cartId: string } }) => {
   const [cart, setCart] = useState<any>(null);
 
   useEffect(() => {

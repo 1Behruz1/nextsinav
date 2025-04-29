@@ -36,7 +36,7 @@ const UserCartClient = ({ userId }: { userId: number }) => {
   }, [userId]);
 
   if (loading) return <div className="text-center">Loading...</div>;
-  if (carts.length === 0) return <div className="text-center text-red-500">Cart yo'q</div>;
+  if (carts.length === 0) return <div className="text-center text-red-500">Cart yo&apos;q</div>
 
   return (
     <div>

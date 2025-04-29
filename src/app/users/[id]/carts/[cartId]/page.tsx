@@ -1,23 +1,25 @@
-import { GetServerSideProps } from "next";
+import { useEffect, useState } from "react";
 
 interface CartProduct {
   productId: number;
   quantity: number;
 }
 
-interface Cart {
-  id: number;
-  userId: number;
-  date: string;
-  products: CartProduct[];
-  __v: number;
-}
+const CartDetailPage = async ({ params }: { params: { cartId: string } }) => {
+  const [cart, setCart] = useState<any>(null);
 
-interface CartPageProps {
-  cart: Cart;
-}
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(`https://fakestoreapi.com/carts/${params.cartId}`);
+      const cartData = await res.json();
+      setCart(cartData);
+    };
 
-const CartDetailPage = ({ cart }: CartPageProps) => {
+    fetchData();
+  }, [params.cartId]);
+
+  if (!cart) return <div>Loading...</div>;
+
   return (
     <div className="p-4">
       <h1 className="text-xl font-bold mb-4">Cart {cart.id}</h1>
@@ -31,16 +33,6 @@ const CartDetailPage = ({ cart }: CartPageProps) => {
       </ul>
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { cartId } = context.params!;
-  const res = await fetch(`https://fakestoreapi.com/carts/${cartId}`);
-  const cart: Cart = await res.json();
-
-  return {
-    props: { cart },
-  };
 };
 
 export default CartDetailPage;

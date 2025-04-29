@@ -1,4 +1,3 @@
-
 interface CartProduct {
   productId: number;
   quantity: number;
@@ -12,15 +11,8 @@ interface Cart {
   __v: number;
 }
 
-interface PageProps {
-  params: {
-    cartId: string;
-  };
-}
-
-const CartDetailPage = async ({ params }: PageProps) => {
+const CartDetailPage = async ({ params }: { params: { cartId: string } }) => {
   const res = await fetch(`https://fakestoreapi.com/carts/${params.cartId}`);
-  if (!res.ok) throw new Error("Failed to fetch cart");
   const cart: Cart = await res.json();
 
   return (

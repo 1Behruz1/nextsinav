@@ -15,7 +15,13 @@ interface Cart {
   __v: number;
 }
 
-const CartDetailPage = ({ params }: { params: { cartId: string } }) => {
+interface PageProps {
+  params: {
+    cartId: string;
+  };
+}
+
+const CartDetailPage = ({ params }: PageProps) => {
   const [cart, setCart] = useState<Cart | null>(null);
 
   useEffect(() => {
